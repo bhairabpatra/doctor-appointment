@@ -42,4 +42,14 @@ public class PatientServiceImpl implements PatientService {
         return patientRepository.findAll();
     }
 
+    @Override
+    public PatientModel getPatient(Long id) {
+        Optional<PatientModel> patientModel = Optional.of(patientRepository.findById(id)).get();
+        if(patientModel.isPresent()){
+            return  patientModel.get();
+        }else{
+            return  null;
+        }
+    }
+
 }

@@ -35,3 +35,7 @@ spring:
           uri: lb://patent-service
           predicates:
             - Path=/patient/**
+        - id: appointment-service
+          uri: lb://appointment-service
+          predicates:
+            - Path=/appointment/**

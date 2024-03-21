@@ -19,4 +19,6 @@ public interface DoctorService {
     List<String> getSpecializations();
 
     DoctorModel findDoctor(String docName);
+
+    DoctorModel getDoctor(Long id);
 }

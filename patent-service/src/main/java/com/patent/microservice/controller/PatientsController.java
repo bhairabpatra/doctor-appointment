@@ -58,4 +58,10 @@ public class PatientsController {
         List<Doctor> doctors = doctorClient.getSpecializedDoctor(specialization);
         return new ResponseEntity<>(doctors, HttpStatus.OK);
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<PatientModel> getPatient(@PathVariable Long id) {
+        PatientModel patient = patientService.getPatient(id);
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
 }

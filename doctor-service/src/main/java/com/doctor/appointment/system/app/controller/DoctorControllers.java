@@ -74,4 +74,10 @@ public class DoctorControllers {
         }
 
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<DoctorModel> getDoctor(@PathVariable Long id) {
+       DoctorModel doctor = doctorService.getDoctor(id);
+        return new ResponseEntity<>(doctor, HttpStatus.OK);
+    }
 }

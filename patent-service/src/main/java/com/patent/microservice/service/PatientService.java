@@ -11,4 +11,6 @@ public interface PatientService {
       PatientModel getPatientByPhone(String phone);
 
       List<PatientModel> getPatients();
+
+      PatientModel getPatient(Long id);
 }

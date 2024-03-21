@@ -68,4 +68,8 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorRepository.findByFirstName(docName);
     }
 
+    @Override
+    public DoctorModel getDoctor(Long id) {
+        return doctorRepository.findById(id).get();
+    }
 }
