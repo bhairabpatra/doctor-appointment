@@ -1,9 +1,13 @@
 package com.patent.microservice.controller;
 
+import com.patent.microservice.client.AppointmentClient;
 import com.patent.microservice.client.DoctorClient;
+import com.patent.microservice.configmq.MQConfig;
+import com.patent.microservice.model.AppointmentModel;
 import com.patent.microservice.model.PatientModel;
 import com.patent.microservice.reqres.Doctor;
 import com.patent.microservice.service.PatientService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,12 @@ public class PatientsController {
 
     @Autowired
     private DoctorClient doctorClient;
+
+    @Autowired
+    private AppointmentClient appointmentClient;
+
+    @Autowired
+    private RabbitTemplate template;
 
     @PostMapping("addPatient")
     public ResponseEntity<PatientModel> addPatients(@RequestBody PatientModel patientModel) {
@@ -63,5 +73,13 @@ public class PatientsController {
     public ResponseEntity<PatientModel> getPatient(@PathVariable Long id) {
         PatientModel patient = patientService.getPatient(id);
         return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
+
+    @PostMapping("appointment")
+    public String makeAppointment(@RequestBody AppointmentModel appointmentModel) {
+        template.convertAndSend(MQConfig.EXCHANGE,
+                MQConfig.ROUTING_KEY, appointmentModel);
+//        return appointmentClient.makeAppointment(appointmentModel);
+        return "Appointment done";
     }
 }
