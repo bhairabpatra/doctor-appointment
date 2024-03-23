@@ -97,12 +97,16 @@ public class DoctorControllers {
     @GetMapping("patients/{id}")
     public ResponseEntity<List<Patients>> getPatients(@PathVariable Long id) {
         List<AppointmentModel> appointmentModel = appointmentClient.getAppointmentDetails(id);
-        List<Patients> patients = new ArrayList<>();
-        List<Long> all = appointmentModel.stream().map(x -> x.getPatent()).collect(Collectors.toList());
-        for (Long number : all) {
-            Patients patients1 = patientsClient.getPatent(number);
-            patients.add(patients1);
-        }
-        return new ResponseEntity<>(patients, HttpStatus.OK);
+
+        List<Long> allPatientIds = appointmentModel.stream()
+                .map(AppointmentModel::getPatent)
+                .collect(Collectors.toList());
+
+        List<Patients> patients = allPatientIds.stream()
+                .map(patientsClient::getPatent)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(patients);
     }
 }
+
