@@ -7,10 +7,11 @@ import java.util.List;
 
 public interface PatientService {
 
-      PatientModel addPatient(PatientModel patientModel);
-      PatientModel getPatientByPhone(String phone);
+    PatientModel addPatient(PatientModel patientModel);
 
-      List<PatientModel> getPatients();
+    PatientModel getPatientByPhone(String phone);
 
-      PatientModel getPatient(Long id);
+    List<PatientModel> getPatients();
+
+    PatientModel getPatient(Long id);
 }

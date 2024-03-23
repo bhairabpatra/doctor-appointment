@@ -109,4 +109,3 @@ public class DoctorControllers {
         return ResponseEntity.ok(patients);
     }
 }
-

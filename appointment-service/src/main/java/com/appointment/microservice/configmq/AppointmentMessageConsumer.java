@@ -12,8 +12,9 @@ public class AppointmentMessageConsumer {
 
     @Autowired
     private AppointmentService appointmentService;
+
     @RabbitListener(queues = MQConfig.QUEUE)
-    public void consumeMessage(AppointmentModel appointmentModel){
+    public void consumeMessage(AppointmentModel appointmentModel) {
         appointmentService.doAppointment(appointmentModel);
     }
 }

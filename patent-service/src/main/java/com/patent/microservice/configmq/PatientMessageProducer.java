@@ -11,7 +11,7 @@ public class PatientMessageProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendPatientDetails(AppointmentModel appointmentModel){
+    public void sendPatientDetails(AppointmentModel appointmentModel) {
         rabbitTemplate.convertAndSend(MQConfig.EXCHANGE,
                 MQConfig.ROUTING_KEY, appointmentModel);
 

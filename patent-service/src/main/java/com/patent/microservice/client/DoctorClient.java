@@ -15,14 +15,12 @@ import java.util.List;
 
 @FeignClient(value = "DOCTOR-SERVICE")
 public interface DoctorClient {
-
-
     @GetMapping(value = "doctor/specializations")
     public List<String> getAllSpecialization();
 
     @GetMapping(value = "doctor/doctors/{specialization}")
-    public List<Doctor> getSpecializedDoctor(@PathVariable String  specialization);
+    public List<Doctor> getSpecializedDoctor(@PathVariable String specialization);
 
     @PutMapping(value = "doctor/{docName}")
-    public String Review(@PathVariable String  docName, @RequestParam Double review );
+    public String Review(@PathVariable String docName, @RequestParam Double review);
 }

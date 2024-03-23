@@ -1,15 +1,11 @@
 package com.patent.microservice.service;
-
-
 import com.patent.microservice.model.PatientModel;
 import com.patent.microservice.repository.PatientRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -46,11 +42,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientModel getPatient(Long id) {
         Optional<PatientModel> patientModel = Optional.of(patientRepository.findById(id)).get();
-        if(patientModel.isPresent()){
-            return  patientModel.get();
-        }else{
-            return  null;
+        if (patientModel.isPresent()) {
+            return patientModel.get();
+        } else {
+            return null;
         }
     }
-
 }

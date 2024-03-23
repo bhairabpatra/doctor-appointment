@@ -89,7 +89,8 @@ public class PatientsController {
         List<String> specializations = doctorClient.getAllSpecialization();
         return new ResponseEntity<>(specializations, HttpStatus.OK);
     }
-     private ResponseEntity<List<String>> circuitBreakerFallback(Exception ex) {
+
+    private ResponseEntity<List<String>> circuitBreakerFallback(Exception ex) {
         System.out.println("Item Doctor is down" + ex.getMessage());
         return null;
     }

@@ -1,4 +1,5 @@
 package com.appointment.microservice.response;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,5 @@ public class AppointmentDetails {
     private String pat_phone;
     private String pat_email;
     private String pat_gender;
-    private  String app_time;
+    private String app_time;
 }
