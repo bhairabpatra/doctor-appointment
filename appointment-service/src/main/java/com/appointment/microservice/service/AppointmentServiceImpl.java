@@ -2,16 +2,17 @@ package com.appointment.microservice.service;
 
 import com.appointment.microservice.client.DoctorClient;
 import com.appointment.microservice.client.PatientClient;
-import com.appointment.microservice.configmq.MQConfig;
 import com.appointment.microservice.model.AppointmentModel;
 import com.appointment.microservice.repository.AppointmentRepository;
 import com.appointment.microservice.reqres.Doctor;
 import com.appointment.microservice.reqres.Patent;
 import com.appointment.microservice.response.AppointmentDetails;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,5 +58,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<AppointmentModel> getAppointments(Long dcoId) {
+        List<AppointmentModel> appointmentModels = appointmentRepository.findByDoctor(dcoId);
+        return appointmentModels;
     }
 }

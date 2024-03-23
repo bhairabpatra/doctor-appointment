@@ -1,4 +1,4 @@
-package com.patent.microservice.model;
+package com.doctor.appointment.system.app.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

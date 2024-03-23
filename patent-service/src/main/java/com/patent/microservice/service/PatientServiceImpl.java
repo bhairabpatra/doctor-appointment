@@ -3,6 +3,7 @@ package com.patent.microservice.service;
 
 import com.patent.microservice.model.PatientModel;
 import com.patent.microservice.repository.PatientRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

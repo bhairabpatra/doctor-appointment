@@ -1,15 +1,22 @@
 package com.doctor.appointment.system.app.controller;
 
 
+import com.doctor.appointment.system.app.client.AppointmentClient;
+import com.doctor.appointment.system.app.client.PatientClient;
+
+import com.doctor.appointment.system.app.model.AppointmentModel;
 import com.doctor.appointment.system.app.model.DoctorModel;
+import com.doctor.appointment.system.app.model.Patients;
 import com.doctor.appointment.system.app.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("doctor/")
@@ -18,6 +25,12 @@ public class DoctorControllers {
 
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private AppointmentClient appointmentClient;
+
+    @Autowired
+    private PatientClient patientsClient;
 
     @PostMapping("create")
     public ResponseEntity<DoctorModel> createDoc(@RequestBody DoctorModel doctorModel) {
@@ -77,7 +90,19 @@ public class DoctorControllers {
 
     @GetMapping("{id}")
     public ResponseEntity<DoctorModel> getDoctor(@PathVariable Long id) {
-       DoctorModel doctor = doctorService.getDoctor(id);
+        DoctorModel doctor = doctorService.getDoctor(id);
         return new ResponseEntity<>(doctor, HttpStatus.OK);
+    }
+
+    @GetMapping("patients/{id}")
+    public ResponseEntity<List<Patients>> getPatients(@PathVariable Long id) {
+        List<AppointmentModel> appointmentModel = appointmentClient.getAppointmentDetails(id);
+        List<Patients> patients = new ArrayList<>();
+        List<Long> all = appointmentModel.stream().map(x -> x.getPatent()).collect(Collectors.toList());
+        for (Long number : all) {
+            Patients patients1 = patientsClient.getPatent(number);
+            patients.add(patients1);
+        }
+        return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 }

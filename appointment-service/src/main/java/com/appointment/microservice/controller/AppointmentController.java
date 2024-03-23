@@ -2,6 +2,7 @@ package com.appointment.microservice.controller;
 
 import com.appointment.microservice.client.DoctorClient;
 
+import com.appointment.microservice.configmq.AppointmentMessageConsumer;
 import com.appointment.microservice.configmq.MQConfig;
 import com.appointment.microservice.model.AppointmentModel;
 import com.appointment.microservice.reqres.Doctor;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("appointment/")
@@ -26,12 +29,13 @@ public class AppointmentController {
     @Autowired
     private DoctorClient doctorClient;
 
-    @RabbitListener(queues = MQConfig.QUEUE)
-    public void listener(AppointmentModel appointmentModel) {
-        System.out.println(appointmentModel);
-        appointmentService.doAppointment(appointmentModel);
 
-    }
+//    @PostMapping("book")
+//    public void listener(AppointmentModel appointmentModel) {
+//        System.out.println(appointmentModel);
+//        appointmentMessageConsumer.consumeMessage(appointmentModel);
+//    }
+
 //    @PostMapping("book")
 //    public ResponseEntity<String> makeAppointment(@RequestBody AppointmentModel appointmentModel) {
 //
@@ -46,5 +50,11 @@ public class AppointmentController {
     public ResponseEntity<AppointmentDetails> getDocAppointment(@PathVariable Long dco_id, @PathVariable Long pat_id) {
         AppointmentDetails appointmentDetails = appointmentService.appointmentDetails(dco_id, pat_id);
         return new ResponseEntity<>(appointmentDetails, HttpStatus.OK);
+    }
+
+    @GetMapping("{dco_id}")
+    public ResponseEntity<List<AppointmentModel>> getAppointments(@PathVariable Long dco_id) {
+        List<AppointmentModel> appointmentModels = appointmentService.getAppointments(dco_id);
+        return new ResponseEntity<>(appointmentModels, HttpStatus.OK);
     }
 }

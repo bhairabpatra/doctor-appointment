@@ -20,8 +20,8 @@ public class AppointmentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long doctor_id;
-    private Long patent_id;
+    private Long doctor;
+    private Long patent;
     private String app_time;
     @CreationTimestamp
     private LocalDateTime createdAt;
